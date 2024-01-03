@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose")
 const User = require("./model/usermodel")
+const userRoutes = require("./routes/userroutes")
 app.use(express.json());
 
 mongoose.set("strictQuery", false);
@@ -20,61 +21,67 @@ db.once('open', () => {
     console.log('Connected to the database!');
 });
 
-const exampleUser = {
-    username: 'Hasan', // Example username as a string
-    password: 'securepassword123', // Example password as a string
-    age: 50, // Example age as a number
-    experience: 8, // Example experience as a number
-    budget: 1000 // Example budget as a number
-};
+// // Helper function for crud
+// const createNewUser = (req, res) => {
+//     User.create(req.body).then((data) => {
+//         res.status(201).send(data);
+//     }).catch((err) => {
+//         res.status(400).send(err);
+//     })
+// }
+
+// // get all user
+// const getAllUser = (req, res) => {
+//     const query = User.find()
+//     query.exec().then((data) => {
+//         res.status(200).send(data);
+//     }).catch((err) => {
+//         res.status(400).send(err);
+//     })
+// }
+
+// const getUserById = (req, res) => {
+//     const query = User.find({ _id: req.params.id });
+//     query.exec().then((data) => {
+//         res.status(201).send(data);
+//     }).catch((err) => {
+//         res.send(400).send(err);
+//     })
+// }
 
 
-// Helper function for crud
-async function createUser(dummyuser) {
-    try {
-        const user = new User(dummyuser);
-        await user.save();
-        console.log("saved successfully");
-    } catch (err) {
-        console.log(err);
-    }
-}
+// const updateUser = (req, res) => {
+//     const query = User.updateOne({ _id: req.params.id }, req.body)
+//     query.exec().then((data) => {
+//         res.status(200).send({ data });
+//     }).catch((err) => {
+//         res.status(400).send({ err });
+//     })
+// }
 
-// get all user
-async function getAllUser() {
-    try {
-        const query = User.find()
-        return await query.exec();
-    } catch (err) {
-        console.log(err);
-    }
-}
+// const deleteUserById = (req, res) => {
+//     const query = User.deleteOne({ _id: req.params.id })
+//     query.exec().then((data) => {
+//         res.status(200).send({ data })
+//     }).catch((err) => {
+//         res.status(400).send({ err });
+//     })
+// }
 
-async function getSingleUser(req){
-    try{
-        const query = User.find({_id : req.params.id});
-        const user = await query.exec();
-        return user;
-     }catch(err){
-        console.log(err);
-     }
-}
+const router = express.Router();
 
 // Router for User
-app.get("/users",  async (req, res) => {
-      const allUser = await getAllUser();
-      res.status(200).send(allUser);
-});
+// router.route("/users/")
+//     .get(getAllUser)
+//     .post(createNewUser)
 
-app.post("/users", async (req, res) => {
-    createUser(req.body);
-    res.status(201).send(req.body);
-})
+// router.route("/users/:id/")
+//     .get(getUserById)
+//     .patch(updateUser)
+//     .delete(deleteUserById)
 
-app.get("/users/:id", async (req, res)=>{
-    const singleUser = await getSingleUser(req);
-    res.status(201).send(singleUser);
-})
+app.use(userRoutes);
+
 
 app.listen(3000, () => {
     console.log("server is listening in port 3000")
