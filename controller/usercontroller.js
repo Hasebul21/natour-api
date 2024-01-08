@@ -5,7 +5,10 @@ exports.createNewUser = (req, res) => {
     User.create(req.body).then((data) => {
         res.status(201).send(data);
     }).catch((err) => {
-        res.status(400).send(err);
+        console.log(err);
+        res.status(400).json({
+        status : "Failed",
+        error : err.message});
     })
 }
 

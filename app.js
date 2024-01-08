@@ -8,7 +8,7 @@ app.use(express.json());
 dbConnectionOpen();
 
 
-// Router Mouting
+// Router Mounting
 app.use(userRoutes);
 
 
