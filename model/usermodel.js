@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre("save", async function(next){
     if(this.password !== this.passwordConfirm){
-        throw new Error("Password and Confirm Password does not match");
+        throw new Error("Password and ConfirmPassword does not match");
     }
     const hash = await bcrypt.hash(this.password, 10);
     this.password = hash;
