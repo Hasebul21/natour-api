@@ -16,9 +16,9 @@ exports.createNewUser = (req, res) => {
 exports.getAllUser = (req, res) => {
     const query = User.find()
     query.exec().then((data) => {
-        res.status(200).send(data);
+        return res.status(200).send(data);
     }).catch((err) => {
-        res.status(400).send(err);
+        return res.status(400).send(err);
     })
 }
 

@@ -11,8 +11,8 @@ dbConnectionOpen();
 
 
 // Router Mounting
-app.use(userRoutes);
-app.use(authRoutes);
+app.use("/api/v1/users", userRoutes)
+app.use("/api/v1/signup", authRoutes);
 
 
 app.listen(3000, () => {
