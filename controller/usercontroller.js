@@ -5,10 +5,9 @@ exports.createNewUser = (req, res) => {
     User.create(req.body).then((data) => {
         res.status(201).send(data);
     }).catch((err) => {
-        console.log(err);
-        res.status(400).json({
-        status : "Failed",
-        error : err.message});
+        err.status = err.status;
+        err.message = err.message;
+        next(err);
     })
 }
 
@@ -18,7 +17,9 @@ exports.getAllUser = (req, res) => {
     query.exec().then((data) => {
         return res.status(200).send(data);
     }).catch((err) => {
-        return res.status(400).send(err);
+        err.status = err.status;
+        err.message = err.message;
+        next(err);
     })
 }
 
@@ -27,7 +28,9 @@ exports.getUserById = (req, res) => {
     query.exec().then((data) => {
         res.status(201).send(data);
     }).catch((err) => {
-        res.send(400).send(err);
+        err.status = err.status;
+        err.message = err.message;
+        next(err);
     })
 }
 
@@ -37,7 +40,9 @@ exports.updateUser = (req, res) => {
     query.exec().then((data) => {
         res.status(200).send({ data });
     }).catch((err) => {
-        res.status(400).send({ err });
+        err.status = err.status;
+        err.message = err.message;
+        next(err);
     })
 }
 
@@ -46,6 +51,8 @@ exports.deleteUserById = (req, res) => {
     query.exec().then((data) => {
         res.status(200).send({ data })
     }).catch((err) => {
-        res.status(400).send({ err });
+        err.status = err.status;
+        err.message = err.message;
+        next(err);
     })
 }

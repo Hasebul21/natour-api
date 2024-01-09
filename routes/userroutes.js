@@ -6,11 +6,11 @@ const { protectRoutes } = require("../controller/authcontroller")
 // Router for User
 router.route("/")
     .get(protectRoutes, userController.getAllUser)
-    .post(userController.createNewUser)
+    .post(protectRoutes, userController.createNewUser)
 
 router.route("/:id")
     .get(userController.getUserById)
-    .patch(userController.updateUser)
-    .delete(userController.deleteUserById)
+    .patch(protectRoutes, userController.updateUser)
+    .delete(protectRoutes, userController.deleteUserById)
 
 module.exports = router;
