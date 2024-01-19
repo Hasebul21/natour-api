@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require('dotenv');
 const userRoutes = require("./routes/userroutes");
 const authRoutes = require("./routes/authroutes");
+const tourRoutes = require("./routes/tourroutes")
 const dbConnectionOpen = require("./dbconfig");
 const { Error } = require("./controller/errorcontroller")
 const app = express();
@@ -15,6 +16,7 @@ dbConnectionOpen();
 // Router Mounting
 app.use("/api/v1/users", userRoutes)
 app.use("/api/v1/signup", authRoutes);
+app.use("/api/v1/tours", tourRoutes)
 
 app.all("*",(req, res, next)=>{
     const err = new Error(`${req.url} is not found`);
